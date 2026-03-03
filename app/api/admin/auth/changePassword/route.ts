@@ -3,21 +3,44 @@ import { connectDB } from "@/db/connectDB";
 import { apiResponse } from "@/lib/apiResponse";
 import { changePasswordSchema } from "@/lib/validations/changePassword.schema";
 import bcrypt from "bcryptjs";
+import { jwtDecrypt, jwtVerify } from "jose";
+import { NextRequest } from "next/server";
 
 
-export async function POST(request:Request) {
+export async function POST(request:NextRequest) {
     await connectDB()
-    try {
         const body = await request.json()
-        const validationResult =  changePasswordSchema.safeParse(body)
-        if(!validationResult.success){
-             return apiResponse(false,validationResult.error.format().newPassword?._errors[0]||"invalid formate of password",400)
+
+        //  const validationResult =  changePasswordSchema.safeParse(body)
+
+        // if(!validationResult.success){
+        //      return apiResponse(false,validationResult.error.format().newPassword?._errors[0]||"invalid formate of password",400)
+        // }
+
+        const token = request.cookies.get("token")?.value;
+
+        if(!token){
+           return apiResponse(false,"token not fount",401)
         }
 
-        const {oldPassword, newPassword,email} = validationResult.data
+        
+        try {
+            const secret = new TextEncoder().encode(
+                process.env.SECRET_TOKEN as string
+            );
+            
+            
+            const { payload } = await jwtVerify(token, secret);
+            
+            console.log("change password",payload);
+            const userId = payload.id as string;
+       
+
+        // const {oldPassword, newPassword} = validationResult.data
+        const {oldPassword, newPassword} = body
       
 
-        const user = await UserModel.findOne({email})
+        const user = await UserModel.findById(userId)
 
         if(!user){
             return apiResponse(false,"user not available",401)

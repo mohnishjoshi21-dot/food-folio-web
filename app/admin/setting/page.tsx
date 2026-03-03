@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { Loader2, Settings } from "lucide-react";
+import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/errorHandler";
 
 export default function Setting() {
 
@@ -44,7 +46,7 @@ export default function Setting() {
   const updatePassword = async () => {
 
     if(form.newPassword !== form.confirmPassword){
-      alert("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -52,9 +54,9 @@ export default function Setting() {
 
       setLoading(true);
 
-      await axios.patch("/api/admin/change-password",form);
+      await axios.post("/api/admin/auth/changePassword",form);
 
-      alert("Password updated successfully");
+      toast.success("Password updated successfully");
 
       setForm({
         currentPassword:"",
@@ -66,7 +68,8 @@ export default function Setting() {
     catch(error){
 
       console.log(error);
-      alert("Failed to update password");
+      
+      toast.error(getErrorMessage(error));
 
     }
     finally{
