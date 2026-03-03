@@ -18,8 +18,6 @@ export default async function PublicBlogsPage({ searchParams }: PageProps) {
 
   console.log("Fetching page:", page);
 
-   await new Promise((resolve) => setTimeout(resolve, 3000));
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/api/blogs?page=${page}&limit=${limit}&sort=${sort}`,
     { cache: "no-store" },
