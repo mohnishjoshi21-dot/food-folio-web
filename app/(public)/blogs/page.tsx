@@ -9,7 +9,7 @@ interface PageProps {
   }>;
 }
 
-const limit = 2;
+const limit = 9;
 
 export default async function PublicBlogsPage({ searchParams }: PageProps) {
   const params = await searchParams;

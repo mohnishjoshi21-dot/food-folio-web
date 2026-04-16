@@ -70,6 +70,7 @@ const CreateBlog = () => {
       const res = await axios.post("/api/admin/blogs", data);
       if (res.data.success) {
         toast.success("Your Blog Posted Successfully");
+        router.replace('/admin/blogs')
       }
     } catch (error) {
       const er = getErrorMessage(error);
