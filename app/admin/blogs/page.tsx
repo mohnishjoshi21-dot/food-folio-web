@@ -6,7 +6,7 @@ interface PageProps {
   searchParams: Promise<{
     page?: string;
     sort?: string;
-    filter?:string;
+    status?:string;
   }>;
 }
 
@@ -16,10 +16,10 @@ export default async function PublicBlogsPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const page = Number(params.page) || 1;
   const sort = params.sort || "newest";
-  const filter = params.filter || "total";
+  const filter = params.status || "total";
 
 
-  console.log("Fetching page:", page);
+  console.log("Fetching page:", filter,sort);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/api/admin/blogs?page=${page}&limit=${limit}&sort=${sort}&status=${filter}`,

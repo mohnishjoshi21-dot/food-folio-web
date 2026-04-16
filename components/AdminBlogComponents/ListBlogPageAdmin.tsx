@@ -64,7 +64,7 @@ const ListBlogPageAdmin = ({ blogs, page, sort,filter, totalPages,stats }: Props
         <Select
           value={sort}
           onValueChange={(value) =>
-            router.push(`/blogs?page=1&sort=${value}`)
+            router.push(`/admin/blogs?page=1&sort=${value}`)
           }
         >
           <SelectTrigger className="w-50">
