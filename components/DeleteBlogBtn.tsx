@@ -38,7 +38,7 @@ export default function DeleteBlogButton({ blogId }: Props) {
 
       if (res.data.success) {
         toast.success("Blog Deleted");
-        router.refresh(); // refresh blog list
+        router.replace("admin/blogs") // refresh blog list
       }
     } catch (error) {
       toast(getErrorMessage(error));

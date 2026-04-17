@@ -1,6 +1,5 @@
 import ViewBlogPage from "@/components/publicPageComponents/ViewBlogPage";
 
-
 type Translation = {
   language: string;
   title: string;
@@ -19,29 +18,43 @@ type Blog = {
 };
 
 interface PageProps {
-  params: Promise<{
+  params: {
     slug: string;
-  }>;
+  };
 }
 
-const ViewBlog = async ({ params }: PageProps) => {
-  const { slug } = await params;
-
-
+// 🔥 ADD THIS (MOST IMPORTANT)
+export async function generateMetadata({ params }: PageProps) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/${slug}`,
-    {
-      cache: "no-store",
-    },
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/${params.slug}`,
+    { cache: "no-store" }
   );
+
   const data = await res.json();
   const blog: Blog = data?.data;
 
-  return (
-    <div>
-      <ViewBlogPage isAdmin={false} blog={blog} />
-    </div>
-  );
-};
+  return {
+    title: blog?.title,
+    description: blog?.content?.slice(0, 150),
+    openGraph: {
+      title: blog?.title,
+      description: blog?.content?.slice(0, 150),
+      images: [blog?.image],
+    },
+  };
+}
 
-export default ViewBlog;
+// 🔥 FIX THIS ALSO (Promise hatao)
+export default async function ViewBlog({ params }: PageProps) {
+const {slug} = await params
+
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/${slug}`,
+    { cache: "no-store" }
+  );
+
+  const data = await res.json();
+  const blog: Blog = data?.data;
+
+  return <ViewBlogPage isAdmin={false} blog={blog} />;
+}
