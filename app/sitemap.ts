@@ -21,6 +21,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       : new Date(),
   }));
 
+  
+
   return [
     {
       url: baseUrl,
