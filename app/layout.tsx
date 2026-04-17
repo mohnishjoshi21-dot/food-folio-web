@@ -43,6 +43,12 @@ export const metadata: Metadata = {
     canonical: baseUrl,
   },
 
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
+
   openGraph: {
     title: "FoodFolio",
     description:
