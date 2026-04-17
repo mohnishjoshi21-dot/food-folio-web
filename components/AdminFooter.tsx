@@ -14,7 +14,7 @@ export default function AdminFooter() {
           <div className="flex flex-col items-center md:items-start gap-2">
             <div className="flex items-center gap-3">
               <span className="text-lg font-semibold text-gray-800">
-                Admin Panel
+                FoodFolio Admin
               </span>
               <span className="text-xs bg-gray-200 px-2 py-1 rounded-full">
                 v1.0.0
@@ -22,19 +22,20 @@ export default function AdminFooter() {
             </div>
 
             <p className="text-sm text-gray-500 text-center md:text-left">
-              © {new Date().getFullYear()} All rights reserved.
+              © {new Date().getFullYear()} FoodFolio. All rights reserved.
             </p>
           </div>
 
           {/* Right - Quick Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600">
+          <nav className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600">
 
             <Link
               href="/"
+              target="_blank"
               className="flex items-center gap-2 hover:text-black transition-colors duration-200"
             >
               <Globe size={16} />
-              Website
+              Visit Website
             </Link>
 
             <Link
@@ -46,14 +47,14 @@ export default function AdminFooter() {
             </Link>
 
             <Link
-              href="/admin/settings"
+              href="/admin/setting"
               className="flex items-center gap-2 hover:text-black transition-colors duration-200"
             >
               <Settings size={16} />
               Settings
             </Link>
 
-          </div>
+          </nav>
         </div>
 
       </div>

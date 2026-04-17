@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Github, Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
+import Logo from "./Logo";
 
 export default function PublicFooter() {
   return (
@@ -13,16 +14,17 @@ export default function PublicFooter() {
 
           {/* Branding */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Dheeraj Ray</h3>
+            <Logo/>
             <p className="text-muted-foreground leading-relaxed">
-              Full Stack Developer building modern web applications
-              using MERN stack and Next.js.
+              A platform sharing insights on food safety, risk management,
+              HACCP, and quality assurance. Built on research and real-world
+              industry experience.
             </p>
           </div>
 
           {/* Navigation */}
           <div className="space-y-4">
-            <h4 className="font-semibold">Navigation</h4>
+            <h4 className="font-semibold">Explore</h4>
             <div className="flex flex-col gap-2 text-muted-foreground">
               <Link href="/" className="hover:text-foreground transition-colors">
                 Home
@@ -30,34 +32,29 @@ export default function PublicFooter() {
               <Link href="/blogs" className="hover:text-foreground transition-colors">
                 Blog
               </Link>
-              <Link href="#projects" className="hover:text-foreground transition-colors">
-                Projects
+              <Link href="/#contact" className="hover:text-foreground transition-colors">
+                Contact
               </Link>
             </div>
           </div>
 
-          {/* Connect */}
+          {/* Contact */}
           <div className="space-y-4">
-            <h4 className="font-semibold">Connect</h4>
+            <h4 className="font-semibold">Contact</h4>
             <div className="flex flex-col gap-2 text-muted-foreground">
 
               <a
-                href="https://github.com/DheerajRay-01"
-                target="_blank"
-                className="flex items-center gap-2 hover:text-foreground transition-colors"
-              >
-                <Github size={16} />
-                GitHub
-                <ArrowUpRight size={14} />
-              </a>
-
-              <a
-                href="mailto:dheeraj@example.com"
+                href="mailto:your-email@example.com"
                 className="flex items-center gap-2 hover:text-foreground transition-colors"
               >
                 <Mail size={16} />
                 Email
+                <ArrowUpRight size={14} />
               </a>
+
+              <p className="text-xs text-muted-foreground">
+                Based in Parma, Italy
+              </p>
 
             </div>
           </div>
@@ -66,7 +63,7 @@ export default function PublicFooter() {
 
         {/* Bottom Section */}
         <div className="mt-12 pt-6 border-t text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Dheeraj Ray. Built with Next.js & Tailwind CSS.
+          © {new Date().getFullYear()} FoodFolio. All rights reserved.
         </div>
 
       </div>

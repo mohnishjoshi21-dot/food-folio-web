@@ -22,6 +22,7 @@ import {
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Logo from "../Logo";
 
 const PortfolioPageComponent = ({
   education,
@@ -39,9 +40,7 @@ const PortfolioPageComponent = ({
 
           <Link href="/" className="flex items-center gap-2">
             <img src="/logo.png" className="h-9 w-9" />
-            <span className="text-lg font-semibold">
-              Food<span className="text-emerald-600">Folio</span>
-            </span>
+            <Logo/>
           </Link>
 
           <div className="hidden md:flex gap-8 text-sm font-medium">

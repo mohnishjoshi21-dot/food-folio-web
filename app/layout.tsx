@@ -115,9 +115,6 @@ export default function RootLayout({
 
         {children}
 
-        {/* Footer (important for SEO internal links) */}
-        <PublicFooter />
-
         <Toaster />
       </body>
     </html>
