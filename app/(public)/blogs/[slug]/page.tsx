@@ -25,13 +25,32 @@ interface PageProps {
 
 // 🔥 ADD THIS (MOST IMPORTANT)
 export async function generateMetadata({ params }: PageProps) {
+
+  const {slug} = await params
+
+  console.log("slug : ",slug);
+  
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/${params.slug}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/${slug}`,
     { cache: "no-store" }
   );
 
   const data = await res.json();
   const blog: Blog = data?.data;
+
+  console.log(blog);
+  
+
+  console.log({
+    title: blog?.title,
+    description: blog?.content?.slice(0, 150),
+    openGraph: {
+      title: blog?.title,
+      description: blog?.content?.slice(0, 150),
+      images: [blog?.image],
+    },
+  });
+  
 
   return {
     title: blog?.title,

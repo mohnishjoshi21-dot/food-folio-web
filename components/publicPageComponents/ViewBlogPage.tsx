@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Script from "next/script";
 
@@ -52,6 +51,24 @@ const ViewBlogPage = ({ blog, isAdmin }: Props) => {
   const blogTitle = selectedTranslation?.title || title;
   const blogContent = selectedTranslation?.content || content;
 
+  // 🔥 Share Function
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: blogTitle,
+          text: "Check out this blog!",
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.log("Share cancelled");
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!");
+    }
+  };
+
   return (
     <>
       {/* 🔥 BLOG SCHEMA (SEO BOOST) */}
@@ -73,74 +90,77 @@ const ViewBlogPage = ({ blog, isAdmin }: Props) => {
         }}
       />
 
-      <div className="px-4 py-10">
-        <Card className="max-w-3xl mx-auto">
-          <CardContent className="p-8 space-y-6">
+      {/* ✅ CLEAN LAYOUT (NO CARD) */}
+      <div className="max-w-3xl mx-auto px-6 py-10 space-y-6">
 
-            {/* Back + Admin Actions */}
-            <div className="flex items-center justify-between">
-              <Button variant="outline" onClick={() => router.push("/blogs")}>
-                ← Back to Blogs
+        {/* Top Section */}
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="flex gap-2 justify-between w-full">
+            <Button variant="outline" onClick={() => router.push("/blogs")}>
+              ← Back
+            </Button>
+
+            <Button variant="outline" onClick={handleShare}>
+              Share
+            </Button>
+          </div>
+
+          {isAdmin && (
+            <div className="flex items-center gap-5">
+              <PublishToggle blogId={blog._id} published={published} />
+              <Button
+                variant="outline"
+                onClick={() => router.push(`/admin/blogs/edit/${slug}`)}
+              >
+                Edit
               </Button>
-
-              {isAdmin && (
-                <div className="flex items-center gap-5">
-                  <PublishToggle blogId={blog._id} published={published} />
-                  <Button
-                    variant="outline"
-                    onClick={() => router.push(`/admin/blogs/edit/${slug}`)}
-                  >
-                    Edit
-                  </Button>
-                  <DeleteBlogButton blogId={blog._id} />
-                </div>
-              )}
+              <DeleteBlogButton blogId={blog._id} />
             </div>
+          )}
+        </div>
 
-            {/* Title */}
-            <h1 className="text-4xl font-bold leading-tight">
-              {blogTitle}
-            </h1>
+        {/* Title */}
+        <h1 className="text-4xl font-bold leading-tight">
+          {blogTitle}
+        </h1>
 
-            {/* Date + Language */}
-            <div className="flex justify-between items-center">
-              <p className="text-muted-foreground text-sm">
-                {createdAt && new Date(createdAt).toDateString()}
-              </p>
+        {/* Date + Language */}
+        <div className="flex justify-between items-center flex-wrap gap-3">
+          <p className="text-muted-foreground text-sm">
+            {createdAt && new Date(createdAt).toDateString()}
+          </p>
 
-              <Select value={language} onValueChange={setLanguage}>
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="english">English</SelectItem>
-                  <SelectItem value="hindi">Hindi</SelectItem>
-                  <SelectItem value="french">French</SelectItem>
-                  <SelectItem value="spanish">Spanish</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <Select value={language} onValueChange={setLanguage}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="english">English</SelectItem>
+              <SelectItem value="hindi">Hindi</SelectItem>
+              <SelectItem value="french">French</SelectItem>
+              <SelectItem value="spanish">Spanish</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-            <Separator />
+        <Separator />
 
-            {/* Image (SEO FIXED) */}
-            <img
-              src={image}
-              alt={blogTitle}
-              className="rounded-xl w-full object-cover"
-            />
+        {/* Image */}
+        <img
+          src={image}
+          alt={blogTitle}
+          className="rounded-xl w-full object-cover"
+        />
 
-            <Separator />
+        <Separator />
 
-            {/* Content */}
-            <div
-              className="prose lg:prose-lg max-w-none"
-              dangerouslySetInnerHTML={{
-                __html: blogContent,
-              }}
-            />
-          </CardContent>
-        </Card>
+        {/* Content */}
+        <div
+          className="prose lg:prose-lg max-w-none"
+          dangerouslySetInnerHTML={{
+            __html: blogContent,
+          }}
+        />
       </div>
     </>
   );
