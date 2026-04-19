@@ -52,22 +52,20 @@ const ViewBlogPage = ({ blog, isAdmin }: Props) => {
   const blogContent = selectedTranslation?.content || content;
 
   // 🔥 Share Function
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: blogTitle,
-          text: "Check out this blog!",
-          url: window.location.href,
-        });
-      } catch (err) {
-        console.log("Share cancelled");
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard!");
-    }
-  };
+const handleShare = async () => {
+  const publicUrl = `${window.location.origin}/blogs/${slug}`;
+
+  if (navigator.share) {
+    await navigator.share({
+      title: blogTitle,
+      text: "Check out this blog!",
+      url: publicUrl,
+    });
+  } else {
+    navigator.clipboard.writeText(publicUrl);
+    alert("Link copied!");
+  }
+};
 
   return (
     <>
