@@ -23,6 +23,10 @@ interface PageProps {
   };
 }
 
+function stripHtml(html: string) {
+  return html.replace(/<[^>]*>?/gm, "");
+}
+
 // 🔥 ADD THIS (MOST IMPORTANT)
 export async function generateMetadata({ params }: PageProps) {
 
@@ -38,27 +42,28 @@ export async function generateMetadata({ params }: PageProps) {
   const data = await res.json();
   const blog: Blog = data?.data;
 
-  console.log(blog);
-  
+ if (!blog) {
+    return {
+      title: "Blog not found",
+      description: "No blog available",
+    };
+  }
 
-  console.log({
-    title: blog?.title,
-    description: blog?.content?.slice(0, 150),
-    openGraph: {
-      title: blog?.title,
-      description: blog?.content?.slice(0, 150),
-      images: [blog?.image],
-    },
-  });
-  
+  const description = stripHtml(blog.content || "").slice(0, 150);
 
   return {
-    title: blog?.title,
-    description: blog?.content?.slice(0, 150),
+    title: blog.title,
+    description,
     openGraph: {
-      title: blog?.title,
-      description: blog?.content?.slice(0, 150),
-      images: [blog?.image],
+      title: blog.title,
+      description,
+      images: [
+        {
+          url: blog.image,
+          width: 1200,
+          height: 630,
+        },
+      ],
     },
   };
 }

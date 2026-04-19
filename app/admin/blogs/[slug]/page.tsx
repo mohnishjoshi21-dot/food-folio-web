@@ -23,6 +23,53 @@ interface PageProps {
   }>;
 }
 
+
+
+function stripHtml(html: string) {
+  return html.replace(/<[^>]*>?/gm, "");
+}
+
+// 🔥 ADD THIS (MOST IMPORTANT)
+export async function generateMetadata({ params }: PageProps) {
+
+  const {slug} = await params
+
+  console.log("slug : ",slug);
+  
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/${slug}`,
+    { cache: "no-store" }
+  );
+
+  const data = await res.json();
+  const blog: Blog = data?.data;
+
+ if (!blog) {
+    return {
+      title: "Blog not found",
+      description: "No blog available",
+    };
+  }
+
+  const description = stripHtml(blog.content || "").slice(0, 150);
+
+  return {
+    title: blog.title,
+    description,
+    openGraph: {
+      title: blog.title,
+      description,
+      images: [
+        {
+          url: blog.image,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
+}
+
 const ViewBlogAdmin = async ({ params }: PageProps) => {
   const { slug } = await params;
 
