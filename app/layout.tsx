@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import PublicFooter from "@/components/PublicFooter";
 import Script from "next/script";
 
 const geistSans = Geist({
@@ -15,18 +14,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const baseUrl = "https://food-folio-web.vercel.app";
+// ✅ Production domain
+const baseUrl = "https://foodfolio.in";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
 
   title: {
-    default: "FoodFolio | Food Safety & Research Insights",
+    default: "FoodFolio — Clarity on Your Plate",
     template: "%s | FoodFolio",
   },
 
   description:
-    "FoodFolio is a platform sharing insights on food safety, risk management, and quality assurance by Pranjal Pandya.",
+    "FoodFolio — Clarity on Your Plate. Explore expert insights on food safety, risk management, and quality assurance by Pranjal Pandya.",
 
   keywords: [
     "food safety",
@@ -35,12 +35,15 @@ export const metadata: Metadata = {
     "risk management",
     "quality assurance",
     "food blog",
+    "foodfolio",
+    "food safety blog",
   ],
 
   authors: [{ name: "Pranjal Pandya" }],
 
+  // ✅ Canonical handled properly
   alternates: {
-    canonical: baseUrl,
+    canonical: "/",
   },
 
   icons: {
@@ -50,27 +53,28 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "FoodFolio",
+    title: "FoodFolio — Clarity on Your Plate",
     description:
-      "Explore food safety, risk management, and quality assurance insights.",
+      "Explore expert insights on food safety, risk management, and quality assurance.",
     url: baseUrl,
     siteName: "FoodFolio",
     type: "website",
     images: [
       {
-        url: "/og-image.png",
+        url: `${baseUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "FoodFolio",
+        alt: "FoodFolio — Clarity on Your Plate",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "FoodFolio",
-    description: "Food safety and research insights platform.",
-    images: ["/og-image.png"],
+    title: "FoodFolio — Clarity on Your Plate",
+    description:
+      "Expert insights on food safety, risk management, and quality assurance.",
+    images: [`${baseUrl}/og-image.png`],
   },
 };
 
@@ -84,7 +88,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* PERSON SCHEMA */}
+        {/* ✅ PERSON SCHEMA */}
         <Script
           id="person-schema"
           type="application/ld+json"
@@ -99,7 +103,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* WEBSITE SCHEMA */}
+        {/* ✅ WEBSITE SCHEMA */}
         <Script
           id="website-schema"
           type="application/ld+json"

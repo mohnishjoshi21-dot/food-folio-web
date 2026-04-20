@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://food-folio-web.vercel.app";
+  const baseUrl = "https://foodfolio.in";
 
   // 🔥 Fetch blogs
   const res = await fetch(
