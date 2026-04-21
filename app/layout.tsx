@@ -36,24 +36,29 @@ export const metadata: Metadata = {
     "quality assurance",
     "food blog",
     "foodfolio",
-    "food safety blog",
   ],
 
   authors: [{ name: "Pranjal Pandya" }],
 
-  // ✅ Canonical handled properly
   alternates: {
-    canonical: "/",
+    canonical: baseUrl,
+  },
+
+  robots: {
+    index: true,
+    follow: true,
   },
 
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
     apple: "/apple-icon.png",
   },
 
   openGraph: {
-    title: "FoodFolio — Clarity on Your Plate",
+    title: {
+      default: "FoodFolio — Clarity on Your Plate",
+      template: "%s | FoodFolio",
+    },
     description:
       "Explore expert insights on food safety, risk management, and quality assurance.",
     url: baseUrl,
@@ -64,17 +69,12 @@ export const metadata: Metadata = {
         url: `${baseUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "FoodFolio — Clarity on Your Plate",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "FoodFolio — Clarity on Your Plate",
-    description:
-      "Expert insights on food safety, risk management, and quality assurance.",
-    images: [`${baseUrl}/og-image.png`],
   },
 };
 
