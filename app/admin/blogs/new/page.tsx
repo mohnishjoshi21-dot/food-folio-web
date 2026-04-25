@@ -65,7 +65,6 @@ const CreateBlog = () => {
   // Submit blog data
   const onSubmit = async (data: z.infer<typeof createBlogSchema>) => {
     setIsPosting(true);
-    console.log(data);
     try {
       const res = await axios.post("/api/admin/blogs", data);
       if (res.data.success) {

@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "\\/\\/console\\.log\\(.*?\\);": true
+    },
+    "search.exclude": {
+        "\\/\\/console\\.log\\(.*?\\);": true
+    }
+}

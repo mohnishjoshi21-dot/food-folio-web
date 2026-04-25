@@ -111,9 +111,7 @@ const EditBlog = () => {
   // Submit blog data
   const onSubmit = async (data: z.infer<typeof updateBlogSchema>) => {
     setIsPosting(true);
-    console.log(data);
     try {
-      console.log("id:", blogID);
 
       const res = await axios.patch(`/api/admin/blogs/${blogID}`, data);
       if (res.data.success) {

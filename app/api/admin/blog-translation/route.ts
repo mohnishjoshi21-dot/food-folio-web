@@ -21,7 +21,7 @@ export async function POST(request: Request) {
    content
   );
 
-  console.log("Translated:", translated);
+
 
   return apiResponse(
    true,

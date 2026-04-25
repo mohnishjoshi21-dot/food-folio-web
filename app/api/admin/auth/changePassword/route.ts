@@ -32,7 +32,6 @@ export async function POST(request:NextRequest) {
             
             const { payload } = await jwtVerify(token, secret);
             
-            console.log("change password",payload);
             const userId = payload.id as string;
        
 

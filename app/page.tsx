@@ -31,8 +31,7 @@ export default async function Home() {
   }
 
 
-  console.log("admin",user);
-  console.log("blog",latestBlogs);
+ 
   
 
   return (

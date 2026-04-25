@@ -16,7 +16,6 @@ export default async function PublicBlogsPage({ searchParams }: PageProps) {
   const page = Number(params.page) || 1;
   const sort = params.sort || "newest";
 
-  console.log("Fetching page:", page);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/api/blogs?page=${page}&limit=${limit}&sort=${sort}`,

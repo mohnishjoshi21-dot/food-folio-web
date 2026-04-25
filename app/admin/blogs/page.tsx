@@ -19,7 +19,6 @@ export default async function PublicBlogsPage({ searchParams }: PageProps) {
   const filter = params.status || "total";
 
 
-  console.log("Fetching page:", filter,sort);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL ?? ""}/api/admin/blogs?page=${page}&limit=${limit}&sort=${sort}&status=${filter}`,
@@ -27,8 +26,6 @@ export default async function PublicBlogsPage({ searchParams }: PageProps) {
   );
 
   const data = await res.json();
-
-console.log(data.data);
 
 
   const blogs = data?.data?.blogs || [];

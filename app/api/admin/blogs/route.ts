@@ -86,7 +86,7 @@ export async function GET(request: Request) {
     const sort = searchParams.get("sort") || "newest";
     const status = searchParams.get("status") || "total";
 
-    console.log("status",status);
+  
     
 
     const skip = (page - 1) * limit;
@@ -118,7 +118,6 @@ switch(sort){
     if (status === "published") filter.published = true;
     if (status === "draft") filter.published = false;
     
-    console.log("filter",filter);
     
 
 

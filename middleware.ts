@@ -11,8 +11,7 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
 
-  console.log("token:", token);
-  console.log("path:", pathname);
+  
 
 
   // 🔓 Allow login page

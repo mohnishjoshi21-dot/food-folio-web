@@ -20,7 +20,6 @@ export async function GET(
 
    const { id:slug} = await params;
 
-   console.log(slug);
    
 
    
@@ -87,7 +86,6 @@ export async function PATCH(
     
     const { id: blogId } = await params;
 
-    console.log("hello");
     
     if (!mongoose.Types.ObjectId.isValid(blogId)) {
       return apiResponse(false,"Invalid Blog ID",400);
@@ -100,7 +98,6 @@ export async function PATCH(
     } catch {
       body = {};
     }
-    console.log("hello1",body);
     
     // Zod Validation
     const validation = updateBlogSchema.safeParse(body);
@@ -113,7 +110,6 @@ export async function PATCH(
         400
       );
     }
-    console.log("hello8");
 
     const blog = await blogModel.findByIdAndUpdate(
       blogId,

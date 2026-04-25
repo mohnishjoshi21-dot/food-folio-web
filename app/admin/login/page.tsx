@@ -34,7 +34,6 @@ const onSubmit = async (data: z.infer<typeof loginSchema>) => {
 
   try {
     const res = await axios.post("/api/admin/auth/login", data);
-    console.log(res);
 
     // ✅ Success Response
     if (res.data.success) {

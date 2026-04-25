@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PageProps) {
 
   const {slug} = await params
 
-  console.log("slug : ",slug);
+
   
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/blogs/${slug}`,
