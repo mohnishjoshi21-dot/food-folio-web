@@ -5,31 +5,43 @@ import Link from "next/link";
 import {
   GraduationCap,
   BriefcaseBusiness,
-  Award,
-  ArrowUpRight,
-  Calendar,
-  Clock3,
   Globe,
-  Microscope,
   Mail,
   Phone,
   Linkedin,
-  BookOpen,
   Sparkles,
   Menu,
-  X,
+  Twitter ,
+  Instagram,
+  MessageCircle,
+  Youtube,
 } from "lucide-react";
+
+
+
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Logo from "../Logo";
 
+
 const PortfolioPageComponent = ({
   education,
   experiences,
   latestBlogs,
+  user,
 }: any) => {
   const [open, setOpen] = useState(false);
+
+  const iconMap = {
+  email: Mail,
+  phone: Phone,
+  linkedin: Linkedin,
+  instagram: Instagram,
+  whatsapp: MessageCircle,
+  youtube: Youtube,
+  twitter: Twitter ,
+};
 
   return (
     <main className="min-h-screen bg-[#FCFCF9] text-slate-900">
@@ -51,7 +63,7 @@ const PortfolioPageComponent = ({
           </div>
 
           <button onClick={() => setOpen(!open)} className="md:hidden">
-            {open ? <X /> : <Menu />}
+            {open ? <Twitter  /> : <Menu />}
           </button>
         </nav>
 
@@ -77,7 +89,7 @@ const PortfolioPageComponent = ({
         </div>
 
         <button onClick={() => setOpen(false)}>
-          <X className="h-5 w-5" />
+          <Twitter  className="h-5 w-5" />
         </button>
       </div>
 
@@ -117,7 +129,7 @@ const PortfolioPageComponent = ({
     {/* IMAGE FIRST ON MOBILE */}
     <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
       <img
-        src="/photo.png"
+        src={user.profileImage}
         className="rounded-2xl shadow-lg h-[280px] w-[220px] sm:h-[340px] sm:w-[260px] object-cover"
       />
     </div>
@@ -131,7 +143,7 @@ const PortfolioPageComponent = ({
         {/* LOCATION */}
         <span className="inline-flex items-center gap-2 bg-emerald-50 px-4 py-2 rounded-full text-sm text-emerald-700">
           <Globe className="h-4 w-4" />
-          Parma, Italy
+          {user.location }
         </span>
 
         {/* BRAND */}
@@ -144,7 +156,7 @@ const PortfolioPageComponent = ({
 
         {/* NAME */}
         <p className="text-xs tracking-[0.2em] text-emerald-600 font-medium">
-          PRANJAL PANDYA
+          {user.name }
         </p>
       </div>
 
@@ -161,9 +173,7 @@ const PortfolioPageComponent = ({
 
       {/* DESCRIPTION */}
       <p className="mt-5 text-sm sm:text-base text-slate-600 max-w-md mx-auto lg:mx-0 leading-relaxed">
-        Sharing research-driven insights on food safety, risk management,
-        and quality assurance — combining academic expertise with
-        real-world industry experience.
+       {user.bio}
       </p>
 
       {/* BUTTONS */}
@@ -191,10 +201,7 @@ const PortfolioPageComponent = ({
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold">About FoodFolio</h2>
           <p className="mt-4 text-slate-600 text-lg">
-            FoodFolio is a platform dedicated to sharing knowledge, research,
-            and real-world experiences in food safety, risk management, and
-            quality assurance. It reflects a journey of continuous learning and
-            practical exposure in the food industry.
+           {user.about}
           </p>
         </div>
       </section>
@@ -282,40 +289,66 @@ const PortfolioPageComponent = ({
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="px-6 lg:px-20 py-16">
-        <div className="max-w-4xl mx-auto bg-emerald-50 rounded-3xl p-10 text-center">
-          <Sparkles className="mx-auto text-emerald-600 mb-4" />
+          <section id="contact" className="px-6 lg:px-20 py-20">
+  <div className="max-w-4xl mx-auto bg-emerald-50/80 backdrop-blur-xl rounded-3xl p-10 text-center shadow-sm">
 
-          <h2 className="text-3xl font-bold">Let’s Connect</h2>
+    <Sparkles className="mx-auto text-emerald-600 mb-4 animate-pulse" />
+    <Logo/>
 
-          <p className="mt-4 text-slate-600">
-            Open to collaborations, consulting opportunities, and professional networking.
-          </p>
+    <h2 className="text-3xl font-bold mt-5">Let’s Connect</h2>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <a href="mailto:pranjalpandya23@gmail.com">
-              <Button>
-                <Mail className="mr-2 h-4 w-4" />
-                Email
-              </Button>
-            </a>
+    <p className="mt-4 text-slate-600 max-w-xl mx-auto">
+      Open to collaborations, consulting opportunities, and professional networking.
+    </p>
 
-            <a href="tel:+918319052600">
-              <Button variant="outline">
-                <Phone className="mr-2 h-4 w-4" />
-                Call
-              </Button>
-            </a>
+    {/* SOCIALS */}
+    <div className="mt-8 flex flex-wrap justify-center gap-4">
 
-            <a href="https://linkedin.com" target="_blank">
-              <Button variant="outline">
-                <Linkedin className="mr-2 h-4 w-4" />
-                LinkedIn
-              </Button>
-            </a>
-          </div>
-        </div>
-      </section>
+      {user.socials?.map((item: any, index: number) => {
+        const Icon = iconMap[item.platform as keyof typeof iconMap];
+
+        return (
+          <a
+            key={index}
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button
+              variant="outline"
+              className="
+                group flex items-center gap-2 
+                px-5 py-2.5 
+                rounded-full 
+                bg-white/80 backdrop-blur 
+                border border-gray-200
+                shadow-sm
+
+                text-sm font-medium capitalize
+
+                transition-all duration-300 ease-in-out
+
+                hover:bg-emerald-600 
+                hover:text-white 
+                hover:shadow-lg 
+                hover:scale-105
+
+                active:scale-95
+              "
+            >
+              {Icon && (
+                <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+              )}
+
+              {item.platform}
+            </Button>
+          </a>
+        );
+      })}
+
+    </div>
+  </div>
+</section>
 
     </main>
   );

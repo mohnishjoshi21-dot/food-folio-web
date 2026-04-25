@@ -21,15 +21,17 @@ export async function POST(request:NextRequest) {
 
         const {email,password} = validationResult.data
 
-        const user = await UserModel.findOne({email})
-        if(!user){
-            return apiResponse(false,"This email is not Exist",400)
-        }
+       const user = await UserModel.findOne({ email }).select("+password");
 
-        const isPasswordCorrect = await bcrypt.compare(password,user.password)
-        if(!isPasswordCorrect){
-            return apiResponse(false,"Incorrect Password",401)
-        }
+if (!user) {
+  return apiResponse(false, "This email does not exist", 400);
+}
+
+const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+if (!isPasswordCorrect) {
+  return apiResponse(false, "Incorrect Password", 401);
+}
         
         const token  = generateToken({id:user._id,email:user.email,role:user.role})
 

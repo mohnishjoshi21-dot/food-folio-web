@@ -1,7 +1,7 @@
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 
-const languages = ["hindi", "french", "spanish"];
+const languages = ["hindi", "french", "spanish","Italian"];
 
 export async function translateBlog(
   title: string,
