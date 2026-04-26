@@ -36,7 +36,8 @@ export async function POST(request:NextRequest) {
        
 
         // const {oldPassword, newPassword} = validationResult.data
-        const {oldPassword, newPassword} = body
+        const {currentPassword, newPassword} = body
+      console.log(currentPassword,newPassword,userId);
       
 
         const user = await UserModel.findById(userId)
@@ -45,7 +46,7 @@ export async function POST(request:NextRequest) {
             return apiResponse(false,"user not available",401)
         }
 
-       const  isPasswordCorrect = await bcrypt.compare(oldPassword,user.password)
+       const  isPasswordCorrect = await bcrypt.compare(currentPassword,user.password)
 
        if(!isPasswordCorrect){
         return apiResponse(false,"Current Password is Incorrect",401)
