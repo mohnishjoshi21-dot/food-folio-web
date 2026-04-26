@@ -94,24 +94,34 @@ export async function GET(request: Request) {
     // Sorting
     let sortOption: any = { createdAt: -1 };
 
-switch(sort){
 
- case "oldest":
-  sortOption = { createdAt: 1 };
- break;
+switch (sort) {
 
- case "title-asc":
-  sortOption = { title: 1 };
- break;
+  case "oldest":
+    sortOption = { createdAt: 1 };
+    break;
 
- case "title-desc":
-  sortOption = { title: -1 };
- break;
+  case "title-asc":
+    sortOption = { title: 1 };
+    break;
 
- default:
-  sortOption = { createdAt: -1 };
+  case "title-desc":
+    sortOption = { title: -1 };
+    break;
 
+  case "views-desc": 
+    sortOption = { views: -1 };
+    break;
+
+  case "views-asc": 
+    sortOption = { views: 1 };
+    break;
+
+  default:
+    sortOption = { createdAt: -1 }; // newest
 }
+
+
     // Filter
     let filter: any = {};
 
@@ -128,7 +138,7 @@ switch(sort){
         // Blogs
         blogModel
           .find(filter)
-          .select("title slug image published createdAt")
+          .select("title slug image published createdAt views")
           .sort(sortOption)
           .skip(skip)
           .limit(limit)
