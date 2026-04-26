@@ -317,6 +317,7 @@ export default function AdminProfileEditor() {
                   <option value="linkedin">LinkedIn</option>
                   <option value="instagram">Instagram</option>
                   <option value="whatsapp">WhatsApp</option>
+                  <option value="youtube">Youtube</option>
                 </select>
 
                 <input
