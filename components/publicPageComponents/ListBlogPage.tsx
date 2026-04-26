@@ -54,6 +54,8 @@ const ListBlogPage = ({ blogs, page, sort, totalPages }: Props) => {
               <SelectItem value="oldest">Oldest First</SelectItem>
               <SelectItem value="title-asc">Title A-Z</SelectItem>
               <SelectItem value="title-desc">Title Z-A</SelectItem>
+              <SelectItem value="views-desc">Most Viewed</SelectItem>
+              <SelectItem value="views-asc">Least Viewed</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
