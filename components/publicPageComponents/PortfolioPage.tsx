@@ -15,6 +15,7 @@ import {
   Instagram,
   MessageCircle,
   Youtube,
+  Eye,
 } from "lucide-react";
 
 
@@ -271,7 +272,10 @@ const PortfolioPageComponent = ({
                     <span>
                       {new Date(blog.createdAt).toLocaleDateString()}
                     </span>
-                    <span>5 min read</span>
+                     <span className="flex items-center gap-1">
+    <Eye size={14} className="text-slate-400" />
+    {blog.views }
+  </span>
                   </div>
 
                   <h3 className="mt-2 font-semibold line-clamp-2">

@@ -15,6 +15,7 @@ import {
 import PublishToggle from "@/components/PublishToggle";
 import { useRouter } from "next/navigation";
 import DeleteBlogButton from "../DeleteBlogBtn";
+import { Eye } from "lucide-react";
 
 type Translation = {
   language: string;
@@ -31,6 +32,7 @@ type Blog = {
   published: boolean;
   translations: Translation[];
   createdAt?: string;
+  views?:number;
 };
 
 interface Props {
@@ -39,7 +41,10 @@ interface Props {
 }
 
 const ViewBlogPage = ({ blog, isAdmin }: Props) => {
-  const { title, content, image, createdAt, published, slug, translations } = blog;
+  const { title, content, image, createdAt, published, slug, translations ,views} = blog;
+
+  console.log(blog);
+  
 
   const [language, setLanguage] = useState("english");
   const router = useRouter();
@@ -123,23 +128,34 @@ const handleShare = async () => {
         </h1>
 
         {/* Date + Language */}
-        <div className="flex justify-between items-center flex-wrap gap-3">
-          <p className="text-muted-foreground text-sm">
-            {createdAt && new Date(createdAt).toDateString()}
-          </p>
+     <div className="flex justify-between items-center flex-wrap gap-3">
+  
+  {/* Left: Date + Views */}
+  <div className="flex items-center gap-3 text-muted-foreground text-sm">
+    <span>
+      {createdAt && new Date(createdAt).toDateString()}
+    </span>
 
-          <Select value={language} onValueChange={setLanguage}>
-            <SelectTrigger className="w-[150px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="english">English</SelectItem>
-              <SelectItem value="hindi">Hindi</SelectItem>
-              <SelectItem value="french">French</SelectItem>
-              <SelectItem value="spanish">Spanish</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+    <span className="flex items-center gap-1">
+      <Eye size={14} className="opacity-70" />
+      {views || 0}
+    </span>
+  </div>
+
+  {/* Right: Language */}
+  <Select value={language} onValueChange={setLanguage}>
+    <SelectTrigger className="w-[150px]">
+      <SelectValue />
+    </SelectTrigger>
+    <SelectContent>
+      <SelectItem value="english">English</SelectItem>
+      <SelectItem value="hindi">Hindi</SelectItem>
+      <SelectItem value="french">French</SelectItem>
+      <SelectItem value="spanish">Spanish</SelectItem>
+    </SelectContent>
+  </Select>
+
+</div>
 
         <Separator />
 
@@ -153,12 +169,34 @@ const handleShare = async () => {
         <Separator />
 
         {/* Content */}
-        <div
-          className="prose lg:prose-lg max-w-none"
-          dangerouslySetInnerHTML={{
-            __html: blogContent,
-          }}
-        />
+     <div
+  className="
+    prose prose-invert prose-zinc lg:prose-lg max-w-none
+
+    prose-p:my-5 leading-7
+    prose-headings:mt-10 prose-headings:mb-4
+    prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
+
+    prose-li:my-1
+    prose-ul:my-4 prose-ol:my-4
+
+    prose-a:text-blue-400 hover:prose-a:text-blue-300
+    prose-strong:text-white
+
+    prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800 
+    prose-pre:rounded-lg prose-pre:p-4 prose-pre:my-6
+
+    prose-code:text-blue-300
+
+    prose-blockquote:border-l-4 prose-blockquote:border-blue-500 
+    prose-blockquote:pl-4 prose-blockquote:text-zinc-300 prose-blockquote:my-6
+
+    prose-img:rounded-xl prose-img:my-6 prose-img:shadow-md
+  "
+  dangerouslySetInnerHTML={{
+    __html: blogContent,
+  }}
+/>
       </div>
     </>
   );

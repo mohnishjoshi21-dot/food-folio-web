@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 
 import DeleteBlogButton from "../DeleteBlogBtn";
+import { Eye } from "lucide-react";
 
 export function BlogCard({ data, isAdmin }: { data: any; isAdmin?: boolean }) {
   const router = useRouter();
@@ -78,7 +79,14 @@ export function BlogCard({ data, isAdmin }: { data: any; isAdmin?: boolean }) {
           {data.title}
         </CardTitle>
 
-        <CardDescription>{date}</CardDescription>
+        <CardDescription className="flex items-center justify-between text-xs">
+  <span>{date}</span>
+
+  <span className="flex items-center gap-1">
+    <Eye size={14} className="opacity-70" />
+    {data.views || 0}
+  </span>
+</CardDescription>
 
         {isAdmin && (
           <div className="text-xs text-muted-foreground space-y-1">

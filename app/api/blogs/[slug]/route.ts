@@ -15,7 +15,11 @@ export async function GET(
       const { slug } = await params;
       
       
-    const blog = await blogModel.findOne({slug,published:true}).lean();
+    const blog = await blogModel.findOneAndUpdate(
+                            { slug, published: true },
+                            { $inc: { views: 1 } }, // ✅ correct
+                            { new: true }
+                          ).lean();
 
     if (!blog) {
       return apiResponse(false,"Blog not found",404);

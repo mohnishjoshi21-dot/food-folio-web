@@ -40,7 +40,7 @@ switch(sort){
 
     const blogs = await blogModel
       .find({published:true})
-      .select("title slug image published createdAt")
+      .select("title slug image published createdAt views")
       .sort(sortOption)
       .skip(skip)
       .limit(limit);
