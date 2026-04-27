@@ -21,7 +21,9 @@ export async function POST(request:NextRequest) {
 
         const {email,password} = validationResult.data
 
-       const user = await UserModel.findOne({ email }).select("+password");
+       const user = await UserModel.findOne({ 
+  email: email.toLowerCase() 
+}).select("+password");
 
 if (!user) {
   return apiResponse(false, "This email does not exist", 400);

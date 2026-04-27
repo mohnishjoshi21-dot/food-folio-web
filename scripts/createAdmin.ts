@@ -7,12 +7,24 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // 🔹 Edit admin details here
-const adminData = {
-  name: "Admin Name",
-  email: "admin@gmail.com",
-  password: "Admin@123",
+const adminData = 
+{
+  name: "Pranjal Pandya",
+  email: "Foodfolio.pranjalpandya@gmail.com",
+  password: "",
   role: "admin",
-};
+  about: "FoodFolio is a platform dedicated to sharing knowledge, research, and real-world experiences in food safety, risk management, and quality assurance. It reflects a journey of continuous learning and practical exposure in the food industry.",
+  bio: "Building safer food systems by sharing research-driven insights on food safety, risk management, and quality assurance.",
+  location: "Parma, Italy",
+  socials: [
+    {
+      "platform": "email",
+      "url": "mailto:Foodfolio.pranjalpandya@gmail.com"
+    },
+  ],
+  "profileImage": "https://res.cloudinary.com/dkrxujdgc/image/upload/v1777145883/portfolio/profile/photo_mh8iq9.png",
+  "isVerified": true
+}
 
 async function createAdmin() {
   try {
@@ -32,12 +44,11 @@ async function createAdmin() {
     const hashedPassword = await bcrypt.hash(adminData.password, 10);
 
     // Create user
-    await UserModel.create({
-      name: adminData.name,
-      email: adminData.email.toLowerCase(),
-      password: hashedPassword,
-      role: adminData.role,
-    });
+  await UserModel.create({
+  ...adminData,
+  password: hashedPassword,
+  email: adminData.email.toLowerCase()
+});
 
     console.log("✅ Admin created successfully");
     process.exit(0);
