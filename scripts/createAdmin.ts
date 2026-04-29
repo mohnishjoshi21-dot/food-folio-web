@@ -11,7 +11,7 @@ const adminData =
 {
   name: "Pranjal Pandya",
   email: "Foodfolio.pranjalpandya@gmail.com",
-  password: "",
+  password: "food@123",
   role: "admin",
   about: "FoodFolio is a platform dedicated to sharing knowledge, research, and real-world experiences in food safety, risk management, and quality assurance. It reflects a journey of continuous learning and practical exposure in the food industry.",
   bio: "Building safer food systems by sharing research-driven insights on food safety, risk management, and quality assurance.",

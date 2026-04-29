@@ -152,6 +152,7 @@ const handleShare = async () => {
       <SelectItem value="hindi">Hindi</SelectItem>
       <SelectItem value="french">French</SelectItem>
       <SelectItem value="spanish">Spanish</SelectItem>
+      <SelectItem value="Italian">Italian</SelectItem>
     </SelectContent>
   </Select>
 
