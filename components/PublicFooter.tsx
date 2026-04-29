@@ -44,7 +44,7 @@ export default function PublicFooter() {
             <div className="flex flex-col gap-2 text-muted-foreground">
 
               <a
-                href="mailto:your-email@example.com"
+                href="mailto:foodfolio.pranjalpandya@gmail.com"
                 className="flex items-center gap-2 hover:text-foreground transition-colors"
               >
                 <Mail size={16} />
