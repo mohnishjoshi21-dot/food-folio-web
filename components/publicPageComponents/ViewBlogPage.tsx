@@ -43,6 +43,10 @@ interface Props {
 const ViewBlogPage = ({ blog, isAdmin }: Props) => {
   const { title, content, image, createdAt, published, slug, translations ,views} = blog;
 
+
+  console.log(blog);
+  
+
   console.log(blog);
   
 
@@ -148,11 +152,13 @@ const handleShare = async () => {
       <SelectValue />
     </SelectTrigger>
     <SelectContent>
-      <SelectItem value="english">English</SelectItem>
-      <SelectItem value="hindi">Hindi</SelectItem>
-      <SelectItem value="french">French</SelectItem>
-      <SelectItem value="spanish">Spanish</SelectItem>
-      <SelectItem value="Italian">Italian</SelectItem>
+     <SelectContent>
+  {translations.map((t) => (
+    <SelectItem key={t.language} value={t.language}>
+      {t.language.charAt(0).toUpperCase() + t.language.slice(1)}
+    </SelectItem>
+  ))}
+</SelectContent>
     </SelectContent>
   </Select>
 
