@@ -3,7 +3,7 @@ import { google } from "@ai-sdk/google";
 
 const languages = ["hindi", "french", "spanish","Italian"];
 
-export async function translateBlog(
+export async function translateBlogGemini(
   title: string,
   content: string
 ) {
