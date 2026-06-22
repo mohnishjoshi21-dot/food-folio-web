@@ -38,6 +38,7 @@ import { getErrorMessage } from "@/lib/errorHandler";
 import { Spinner } from "@/components/ui/spinner";
 import { useParams, useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
+import { EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle,Empty } from "@/components/ui/empty";
 
 type Translation = {
   language: string;
@@ -86,6 +87,8 @@ const EditBlog = () => {
       const res = await axios.get(`/api/admin/blogs/${slug}`);
       if (res.data.success) {
         const blog = res.data.data;
+      
+      
         setBlogID(blog._id);
         form.reset({
           title: blog.title,
@@ -125,7 +128,53 @@ const EditBlog = () => {
     }
   };
 
+
+    // Call translation API
+  const handleTranslate = async () => {
+    setIsTranslating(true);
+
+    const title = form.getValues("title");
+    const content = form.getValues("content");
+console.log("before :::::::::");
+
+    console.log("Title:", form.getValues("title"));
+console.log("Content:", form.getValues("content"));
+
+
+  
+    
+
+    try {
+      const response = await axios.post("/api/admin/blog-translation", {
+        title,
+        content,
+      });
+
+      const data = response.data;
+
+      console.log("after :::::::::");
+
+      console.log(data.data);
+      
+      if (data.success) {
+        toast.success("Successfully Translated");
+
+        // Set translations in form
+        form.setValue("translations", data.data, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+      }
+    } catch (error: any) {
+      const erMsg = getErrorMessage(error);
+      toast.error(erMsg);
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
   const isPublished = form.watch("published");
+    
 
   return (
     <div className="max-w-4xl mx-auto mt-10 px-4 pb-20">
@@ -138,9 +187,11 @@ const EditBlog = () => {
           ← Back to Blogs
         </Button>
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl">Create Blog</CardTitle>
+         <CardTitle className="text-3xl">Edit Blog</CardTitle>
 
-          <CardDescription>Write and publish a new blog</CardDescription>
+<CardDescription>
+  Update and manage your blog
+</CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -181,21 +232,40 @@ const EditBlog = () => {
                   </Field>
                 )}
               />
+               Translation Section 
 
-              {/* Translation Section */}
-
-              <h2>Blog Content</h2>
-
+              {/* <h2>Blog Content</h2>
               <div>
-                {/* Translation Spinner */}
+                  <h2>Translation</h2>
 
-                {/* Translated Editors */}
+              <Button
+                type="button"
+                onClick={handleTranslate}
+                disabled={isTranslating}
+              >
+                {isTranslating ? "Translating..." : "Translate Blog"}
+              </Button>
+
+               {isTranslating && (
+                  <Empty className="w-full border rounded-lg p-6">
+                    <EmptyHeader>
+                      <EmptyMedia variant="icon">
+                        <Spinner />
+                      </EmptyMedia>
+
+                      <EmptyTitle>Translating Blog...</EmptyTitle>
+
+                      <EmptyDescription>
+                        Please wait while we translate your blog.
+                      </EmptyDescription>
+                    </EmptyHeader>
+                  </Empty>
+                )}
 
                 {form.watch("translations")?.map((item, index) => (
                   <div key={item.language} className="space-y-3 mb-5">
                     <h3 className="font-bold uppercase">{item.language}</h3>
 
-                    {/* Translation Title */}
 
                     <Controller
                       name={`translations.${index}.title`}
@@ -205,7 +275,6 @@ const EditBlog = () => {
                       )}
                     />
 
-                    {/* Translation Content */}
 
                     <Controller
                       name={`translations.${index}.content`}
@@ -220,6 +289,112 @@ const EditBlog = () => {
                   </div>
                 ))}
               </div>
+         */}
+
+         {/* Blog Content */}
+
+<div className="space-y-4">
+  <h2 className="text-xl font-semibold">Blog Content</h2>
+
+  <Controller
+    name="content"
+    control={form.control}
+    render={({ field, fieldState }) => (
+      
+      <Field data-invalid={fieldState.invalid}>
+        <FieldLabel>Content</FieldLabel>
+
+      
+
+      <Tiptap
+  key={form.watch("content")}
+  content={field.value || ""}
+  onChange={field.onChange}
+/>
+
+        {fieldState.invalid && (
+          <FieldError errors={[fieldState.error]} />
+        )}
+      </Field>
+    )}
+  />
+</div>
+
+{/* Translation Section */}
+
+<div className="space-y-5">
+  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+    <div>
+      <h2 className="text-xl font-semibold">Translations</h2>
+      <p className="text-sm text-muted-foreground">
+        Regenerate translations using the latest title and content.
+      </p>
+    </div>
+
+    <Button
+      type="button"
+      variant="default"
+      onClick={handleTranslate}
+      disabled={isTranslating}
+    >
+      {isTranslating
+        ? "Re-Translating..."
+        : "🔄 Re-Translate Blog"}
+    </Button>
+  </div>
+
+  {isTranslating && (
+    <Empty className="w-full border rounded-lg p-6">
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <Spinner />
+        </EmptyMedia>
+
+        <EmptyTitle>Re-Translating Blog...</EmptyTitle>
+
+        <EmptyDescription>
+          Please wait while translations are being generated.
+        </EmptyDescription>
+      </EmptyHeader>
+    </Empty>
+  )}
+
+  {form.watch("translations")?.map((item, index) => (
+    <Card key={item.language} className="border">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-lg uppercase">
+          {item.language}
+        </CardTitle>
+      </CardHeader>
+
+      <CardContent className="space-y-4">
+        <Controller
+          name={`translations.${index}.title`}
+          control={form.control}
+          render={({ field }) => (
+            <Input
+              {...field}
+              placeholder="Translated title"
+            />
+          )}
+        />
+
+        <Controller
+          name={`translations.${index}.content`}
+          control={form.control}
+          render={({ field }) => (
+            <Tiptap
+              content={field.value || ""}
+              onChange={field.onChange}
+            />
+          )}
+        />
+      </CardContent>
+    </Card>
+  ))}
+</div>
+
+
             </FieldGroup>
 
             {/* Submit Button */}

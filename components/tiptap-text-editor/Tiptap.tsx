@@ -4,16 +4,17 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
+import { useEffect } from "react";
 
 import MenuBar from "./menu-bar";
 
 interface Props {
   content: string;
   onChange: (content: string) => void;
-    editable?: boolean;
+  editable?: boolean;
 }
 
-const Tiptap = ({ content, onChange ,editable = true}: Props) => {
+const Tiptap = ({ content, onChange, editable = true }: Props) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -47,16 +48,26 @@ const Tiptap = ({ content, onChange ,editable = true}: Props) => {
 
     immediatelyRender: false,
 
-   editorProps:{
- attributes:{
-  class:"prose prose-slate max-w-none min-h-[70vh] focus:outline-none px-8 py-6 leading-7 text-[16px]"
- }
-},
+    editorProps: {
+      attributes: {
+        class: "prose prose-slate max-w-none min-h-[70vh] focus:outline-none px-8 py-6 leading-7 text-[16px]"
+      }
+    },
 
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());
     },
   });
+
+useEffect(() => {
+  if (!editor) return;
+
+  const currentContent = editor.getHTML();
+
+  if (currentContent !== (content || "")) {
+    editor.commands.setContent(content || "");
+  }
+}, [content, editor]);
 
   if (!editor) return null;
 
